@@ -15,8 +15,9 @@
         Require all denied
     </FilesMatch>
 
-    # 3. Block execution of backdoor scripts / PHP in storage or assets directory
-    RewriteCond %{REQUEST_URI} ^/storage/.*\.(php[0-9]?|phtml|phar|pl|py|jsp|asp|sh|cgi)$ [NC]
+    # 3. Block execution of backdoor scripts / PHP in storage or assets directory (including double-extension tricks)
+    RewriteCond %{REQUEST_URI} ^/storage/.*\.(php[0-9]?|phtml|phar|phps|pl|py|jsp|asp|aspx|sh|cgi|exe|bat|cmd|vbs) [NC,OR]
+    RewriteCond %{REQUEST_URI} ^/storage/.*(\.php|\.phtml|\.phar|\.pl|\.py|\.cgi|\.sh)\. [NC]
     RewriteRule .* - [F,L]
 
     # Handle Authorization Header

@@ -42,10 +42,11 @@
     <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
         <div class="divide-y divide-slate-200">
             @forelse($documents as $doc)
+            @php
+                $isUrl = str_starts_with($doc->file_path, 'http');
+            @endphp
             <div class="p-5 sm:p-6 hover:bg-slate-50 transition flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                    @php
-                        $isUrl = str_starts_with($doc->file_path, 'http');
-                    @endphp
+                <div class="flex items-start sm:items-center gap-4 min-w-0 flex-1">
                     <div class="w-12 h-12 rounded-xl flex items-center justify-center text-xl flex-shrink-0 border 
                         @if($doc->file_type == 'GDRIVE') bg-amber-50 text-amber-600 border-amber-200
                         @elseif($doc->file_type == 'PDF') bg-rose-50 text-rose-600 border-rose-100
@@ -72,7 +73,7 @@
                         @endif
                     </div>
 
-                    <div class="space-y-1">
+                    <div class="space-y-1 min-w-0">
                         <h3 class="text-sm sm:text-base font-bold text-slate-900 leading-snug">{{ $doc->title }}</h3>
                         @if($doc->description)
                             <p class="text-xs text-slate-500 leading-relaxed max-w-2xl">{{ $doc->description }}</p>
