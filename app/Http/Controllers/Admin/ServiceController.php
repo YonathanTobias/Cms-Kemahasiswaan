@@ -15,6 +15,20 @@ class ServiceController extends Controller
         return view('admin.services.index', compact('services'));
     }
 
+    /**
+     * Quick toggle for enabling / disabling the entire services module
+     */
+    public function toggleModule()
+    {
+        $current = get_setting('enable_services', '1') !== '0';
+        $newValue = $current ? '0' : '1';
+        \App\Models\Setting::set('enable_services', $newValue);
+        \App\Models\Setting::clearCache();
+
+        $statusText = $newValue === '1' ? 'diaktifkan dan ditampilkan di website' : 'dinonaktifkan dan disembunyikan dari website';
+        return back()->with('success', "Modul & Menu Layanan Divisi berhasil {$statusText}.");
+    }
+
     public function create()
     {
         return view('admin.services.create');

@@ -69,7 +69,9 @@
                                 {{ $m->url }}
                             </td>
                             <td class="p-3 text-center">
-                                @if($m->is_active)
+                                @if($m->url === '/layanan' && get_setting('enable_services', '1') === '0')
+                                    <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-100 text-amber-800" title="Modul Layanan dinonaktifkan via Switch Layanan">Off (Disembunyikan)</span>
+                                @elseif($m->is_active)
                                     <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800">Aktif</span>
                                 @else
                                     <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-slate-100 text-slate-500">Nonaktif</span>

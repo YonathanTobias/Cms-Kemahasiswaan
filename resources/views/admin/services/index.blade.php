@@ -14,6 +14,45 @@
         </a>
     </div>
 
+    <!-- Quick Module On/Off Switch Banner -->
+    @php
+        $servicesEnabled = get_setting('enable_services', '1') !== '0';
+    @endphp
+    <div class="p-4 sm:p-5 rounded-2xl border transition-all duration-200 flex flex-col sm:flex-row sm:items-center justify-between gap-4 {{ $servicesEnabled ? 'bg-emerald-50/70 border-emerald-200' : 'bg-amber-50/70 border-amber-200' }}">
+        <div class="flex items-start sm:items-center space-x-3.5">
+            <div class="w-10 h-10 rounded-xl flex items-center justify-center text-lg shrink-0 {{ $servicesEnabled ? 'bg-emerald-600 text-white shadow-md shadow-emerald-600/20' : 'bg-amber-500 text-white shadow-md shadow-amber-500/20' }}">
+                <i class="{{ $servicesEnabled ? 'fa-solid fa-toggle-on' : 'fa-solid fa-toggle-off' }}"></i>
+            </div>
+            <div>
+                <div class="flex items-center space-x-2">
+                    <h3 class="text-xs sm:text-sm font-bold text-slate-900">Status Menu & Modul Layanan:</h3>
+                    @if($servicesEnabled)
+                        <span class="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-emerald-600 text-white uppercase tracking-wider">Aktif (Tampil di Web)</span>
+                    @else
+                        <span class="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-amber-600 text-white uppercase tracking-wider">Nonaktif (Disembunyikan)</span>
+                    @endif
+                </div>
+                <p class="text-[11px] text-slate-500 mt-0.5">
+                    @if($servicesEnabled)
+                        Menu navigasi "Layanan", halaman daftar layanan, serta blok kartu layanan di beranda sedang <strong>aktif dan terlihat</strong> oleh pengunjung.
+                    @else
+                        Menu navigasi "Layanan" dan seluruh tampilan layanan di website publik sedang <strong>disembunyikan</strong> dari pengunjung.
+                    @endif
+                </p>
+            </div>
+        </div>
+        <form action="{{ route('admin.services.toggle-module') }}" method="POST" class="shrink-0" onsubmit="return confirm('Apakah Anda yakin ingin {{ $servicesEnabled ? 'menonaktifkan' : 'mengaktifkan' }} modul & menu Layanan di website?');">
+            @csrf
+            <button type="submit" class="w-full sm:w-auto px-4 py-2.5 rounded-xl text-xs font-bold transition flex items-center justify-center shadow-sm {{ $servicesEnabled ? 'bg-white hover:bg-rose-50 text-rose-700 border border-rose-200' : 'bg-emerald-600 hover:bg-emerald-700 text-white' }}">
+                @if($servicesEnabled)
+                    <i class="fa-solid fa-power-off mr-2"></i> Nonaktifkan Menu Layanan
+                @else
+                    <i class="fa-solid fa-power-off mr-2"></i> Aktifkan Menu Layanan
+                @endif
+            </button>
+        </form>
+    </div>
+
     <!-- Services Table -->
     <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
         <div class="overflow-x-auto">
