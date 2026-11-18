@@ -16,8 +16,6 @@ Options -Indexes -ExecCGI -Includes
     php_flag engine off
 </IfModule>
 
-# Force default static handler (stops FastCGI / proxy from running scripts)
-SetHandler default-handler
 RemoveHandler .php .phtml .php3 .php4 .php5 .php7 .php8 .phps .phar .inc .cgi .pl .py .sh .bash .asp .aspx .jsp
 RemoveType .php .phtml .php3 .php4 .php5 .php7 .php8 .phps .phar .inc .cgi .pl .py .sh .bash .asp .aspx .jsp
 
@@ -54,14 +52,22 @@ RemoveType .php .phtml .php3 .php4 .php5 .php7 .php8 .phps .phar .inc .cgi .pl .
     </IfModule>
 </FilesMatch>
 
+# Ensure proper MIME types for images & documents
+<IfModule mod_mime.c>
+    AddType image/webp .webp
+    AddType image/svg+xml .svg
+    AddType image/jpeg .jpg .jpeg
+    AddType image/png .png
+    AddType image/gif .gif
+    AddType application/pdf .pdf
+</IfModule>
+
 # 6. HTTP Security Headers to prevent MIME-type spoofing & SVG Stored XSS
 <IfModule mod_headers.c>
-    # Prevent browser from MIME-sniffing a file away from the declared content-type
     Header set X-Content-Type-Options "nosniff"
     Header set X-Download-Options "noopen"
     Header set X-Robots-Tag "noindex, nofollow"
 
-    # Isolate SVG files so embedded javascript/malware cannot execute
     <FilesMatch "(?i)\.svg$">
         Header set Content-Security-Policy "default-src 'none'; style-src 'unsafe-inline'; sandbox"
     </FilesMatch>

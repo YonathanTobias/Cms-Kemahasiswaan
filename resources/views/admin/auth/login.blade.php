@@ -63,7 +63,7 @@
                 <div class="space-y-1">
                     <label class="text-xs font-bold text-slate-700">Email Administrator</label>
                     <div class="relative">
-                        <input type="email" name="email" value="{{ old('email', 'admin@pantiwaluya.ac.id') }}" required autofocus class="w-full pl-10 pr-4 py-2.5 rounded-xl text-xs bg-slate-50 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:bg-white transition" placeholder="admin@pantiwaluya.ac.id">
+                        <input type="email" name="email" value="{{ old('email') }}" required autofocus class="w-full pl-10 pr-4 py-2.5 rounded-xl text-xs bg-slate-50 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:bg-white transition">
                         <i class="fa-regular fa-envelope absolute left-3.5 top-3 text-slate-400 text-xs"></i>
                     </div>
                 </div>
@@ -71,7 +71,7 @@
                 <div class="space-y-1">
                     <label class="text-xs font-bold text-slate-700">Kata Sandi</label>
                     <div class="relative">
-                        <input type="password" name="password" required class="w-full pl-10 pr-4 py-2.5 rounded-xl text-xs bg-slate-50 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:bg-white transition" placeholder="••••••••">
+                        <input type="password" name="password" required class="w-full pl-10 pr-4 py-2.5 rounded-xl text-xs bg-slate-50 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:bg-white transition">
                         <i class="fa-solid fa-lock absolute left-3.5 top-3 text-slate-400 text-xs"></i>
                     </div>
                 </div>
