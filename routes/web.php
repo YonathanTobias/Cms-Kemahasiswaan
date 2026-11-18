@@ -117,3 +117,25 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::resource('messages', MessageController::class)->only(['index', 'show', 'destroy']);
     });
 });
+
+/*
+|--------------------------------------------------------------------------
+| Storage Asset Fallback Route (Khusus Shared Hosting / cPanel)
+|--------------------------------------------------------------------------
+| Jika symlink public/storage di hosting belum dibuat / bermasalah, route ini
+| secara otomatis menyajikan file media dari storage/app/public dengan aman.
+*/
+Route::get('/storage/{path}', function ($path) {
+    $basePath = realpath(storage_path('app/public'));
+    $targetPath = realpath(storage_path('app/public/' . $path));
+
+    if (!$basePath || !$targetPath || !str_starts_with($targetPath, $basePath) || !file_exists($targetPath)) {
+        abort(404);
+    }
+
+    if (preg_match('/\.(php[0-9]?|phtml|phar|sh|cgi|pl|py|exe|env|git|sql)$/i', $targetPath)) {
+        abort(403);
+    }
+
+    return response()->file($targetPath);
+})->where('path', '.*');
