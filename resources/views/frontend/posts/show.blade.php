@@ -43,7 +43,7 @@
             <!-- Featured Image -->
             @if($post->thumbnail)
             <div class="rounded-2xl overflow-hidden shadow-md max-h-[480px]">
-                <img src="{{ str_starts_with($post->thumbnail, 'http') ? $post->thumbnail : asset($post->thumbnail) }}" alt="{{ $post->title }}" class="w-full h-full object-cover" decoding="async">
+                <img src="{{ str_starts_with($post->thumbnail, 'http') ? $post->thumbnail : asset($post->thumbnail) }}" alt="{{ $post->title }}" class="w-full h-full object-cover" decoding="async" onerror="this.parentElement.style.display='none'">
             </div>
             @endif
 
